@@ -284,7 +284,8 @@ class BIP32Key(object):
 
     def Address(self):
         "Return compressed public key address"
-        addressversion = b'\x00' if not self.testnet else b'\x6f'
+        #addressversion = b'\x00' if not self.testnet else b'\x6f'
+        addressversion = b'\x4c' if not self.testnet else b'\x8c'
         vh160 = addressversion + self.Identifier()
         return Base58.check_encode(vh160)
 
@@ -293,7 +294,8 @@ class BIP32Key(object):
         "Returns private key encoded for wallet import"
         if self.public:
             raise Exception("Publicly derived deterministic keys have no private half")
-        addressversion = b'\x80' if not self.testnet else b'\xef'
+        #addressversion = b'\x80' if not self.testnet else b'\xef'            
+        addressversion = b'\xcc' if not self.testnet else b'\xef'
         raw = addressversion + self.k.to_string() + b'\x01' # Always compressed
         return Base58.check_encode(raw)
 
